@@ -74,6 +74,7 @@ class Command(BaseCommand):
         updater.dispatcher.add_handler(change_percent_handler)
         updater.dispatcher.add_handler(general_job_handler)
         updater.dispatcher.add_handler(helper_handler)
+        updater.dispatcher.add_handler(stop_handler)
 
         updater.start_polling()
         updater.idle()
