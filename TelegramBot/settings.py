@@ -28,9 +28,9 @@ if os.path.exists(dotenv_path):
 SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DEBUG_DEV')
+DEBUG = os.environ.get('DEBUG_PROD')
 
-ALLOWED_HOSTS = os.environ.get('ALLOWED_HOST_DEV').split(',')
+ALLOWED_HOSTS = os.environ.get('ALLOWED_HOST_PROD').split(',')
 
 
 # Application definition
