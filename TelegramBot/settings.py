@@ -129,7 +129,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 
 
 # Токен бота
-TOKEN = os.environ.get('BOT_TOKEN')
+TOKEN = os.environ.get('BOT_TOKEN_PROD')
 # ID оператора
 OPERATOR_ID = int(os.environ.get('OPERATOR_ID'))
 # Установка времени для обновления базы данных цен на товары
