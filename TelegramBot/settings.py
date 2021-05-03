@@ -28,9 +28,9 @@ if os.path.exists(dotenv_path):
 SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DEBUG_PROD')
+DEBUG = os.environ.get('DEBUG_DEV')
 
-ALLOWED_HOSTS = os.environ.get('ALLOWED_HOST_PROD').split(',')
+ALLOWED_HOSTS = os.environ.get('ALLOWED_HOST_DEV').split(',')
 
 
 # Application definition
@@ -129,16 +129,16 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 
 
 # Токен бота
-TOKEN = os.environ.get('BOT_TOKEN_PROD')
+TOKEN = os.environ.get('BOT_TOKEN_DEV')
 # ID оператора
 OPERATOR_ID = int(os.environ.get('OPERATOR_ID'))
 # Установка времени для обновления базы данных цен на товары
-UPDATE_TIME = [12, 0]
+UPDATE_TIME = list(map(int, os.environ.get('UPDATE_TIME').split(',')))
 # Установка времени для отправки сообщений оператора по найденным им ценам
-MONITORING_TIME = [18, 37]
+MONITORING_TIME = list(map(int, os.environ.get('MONITORING_TIME').split(',')))
 # Установка времени для отправки сообщений оператора по найденным желаемым ценам пользователей
 # MONITORING_WAITING_TIME = [20, 15]
 # Установка времени для ежедневного активного мониторинга
-ACTIVE_TIME = [15, 59]
+ACTIVE_TIME = list(map(int, os.environ.get('ACTIVE_TIME').split(',')))
 # Установка времени для пассивного мониторинга
-PASSIVE_TIME = [14, 0]
+PASSIVE_TIME = list(map(int, os.environ.get('PASSIVE_TIME').split(',')))

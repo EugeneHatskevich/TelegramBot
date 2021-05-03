@@ -37,6 +37,8 @@ class Command(BaseCommand):
         general_job_handler = CommandHandler('all_jobs', command_handlers.set_general_jobs)
         """Команда для вызова помощи"""
         helper_handler = CommandHandler('help', command_handlers.helper)
+        """Команда для остановки мониторинга"""
+        stop_handler = CommandHandler('stop', command_handlers.stop_command)
 
         conv_handler = ConversationHandler(
             entry_points=[CommandHandler('start', command_handlers.start)],

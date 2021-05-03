@@ -1,11 +1,11 @@
 from telegram import Update
 from telegram.ext import CallbackContext, ConversationHandler
-from ugc.models import PassiveMonitoring
+from ugc.models import PassiveMonitoring, ActiveMonitoring
 from ...commands import bot
 import datetime
 from pytz import timezone
 from ugc.management.commands.admin_commands.update_price import update_price
-from ugc.management.commands.admin_commands.send_operator_message import send_operator_message
+# from ugc.management.commands.admin_commands.send_operator_message import send_operator_message
 from django.conf import settings
 from ugc.management.commands.admin_commands.passive_notification import passive_notification
 from ugc.management.commands.admin_commands.daily_notification import daily_notification
@@ -72,15 +72,15 @@ def set_general_jobs(update: Update, context: CallbackContext):
         update.message.reply_text(
             text='Команда по ежедневному мониторингу установлена!'
         )
-        context.job_queue.run_daily(send_operator_message,
-                                    datetime.time(settings.MONITORING_TIME[0],
-                                                  settings.MONITORING_TIME[1],
-                                                  tzinfo=timezone('Europe/Minsk')),
-                                    context=chat_id,
-                                    name=f'{str(chat_id)}_send_operator_message')
-        update.message.reply_text(
-            text='Команда по отправке сообщений оператора установлена!'
-        )
+        # context.job_queue.run_daily(send_operator_message,
+        #                             datetime.time(settings.MONITORING_TIME[0],
+        #                                           settings.MONITORING_TIME[1],
+        #                                           tzinfo=timezone('Europe/Minsk')),
+        #                             context=chat_id,
+        #                             name=f'{str(chat_id)}_send_operator_message')
+        # update.message.reply_text(
+        #     text='Команда по отправке сообщений оператора установлена!'
+        # )
         # context.job_queue.run_daily(send_operator_message_waiting,
         #                             datetime.time(settings.MONITORING_WAITING_TIME[0],
         #                                           settings.MONITORING_WAITING_TIME[1],
@@ -126,3 +126,13 @@ def helper_forth(update: Update, context: CallbackContext):
         text='Здесь необходимо ввести число'
     )
     return bot.FORTH
+
+
+def stop_command(update: Update, context: CallbackContext):
+    active_monitoring_list = ActiveMonitoring.objects.all()
+    for i in active_monitoring_list:
+        if i.profile.external_id == update.message.chat_id:
+            i.delete()
+    update.message.reply_text(
+        text='Мониторинг отключен'
+    )

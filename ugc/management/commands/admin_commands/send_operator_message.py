@@ -1,27 +1,29 @@
-from ugc.models import Product, Message, Profile
-from telegram.ext import CallbackContext
-# from telegram import InlineKeyboardMarkup, InlineKeyboardButton
-
-
-def send_operator_message(context: CallbackContext):
-    """Отправляет ежедневно в 10.00 сообщения оператора по товарам, которые мониторят пользователи"""
-    product_list = Product.objects.all()
-    for product in product_list:
-        if product.operator_message:
-            message_list = Message.objects.filter(product=product)
-            for message in message_list:
-                users_list = Profile.objects.filter(external_id=message.profile.external_id)
-                for user in users_list:
-                    chat_id = user.external_id
-                    product_url = product.product_url
-                    current_price = product.current_price
-                    operator_price = product.operator_price
-                    context.bot.send_message(chat_id, product_url)
-                    message = product.operator_message.replace('Товар', product.product_name).replace('cost', str(
-                        product.operator_price))
-                    context.bot.send_message(chat_id, f'На этот товар оператор нашел ниже цену, '
-                                                      f'вместо {current_price} цена составляет {operator_price}!\n'
-                                                      f'{message}')
+# from ugc.models import Product, Message, Profile
+# from telegram.ext import CallbackContext
+#
+#
+# # from telegram import InlineKeyboardMarkup, InlineKeyboardButton
+#
+#
+# def send_operator_message(context: CallbackContext):
+#     """Отправляет ежедневно в 10.00 сообщения оператора по товарам, которые мониторят пользователи"""
+#     product_list = Product.objects.all()
+#     for product in product_list:
+#         if product.operator_message:
+#             message_list = Message.objects.filter(product=product)
+#             for message in message_list:
+#                 users_list = Profile.objects.filter(external_id=message.profile.external_id)
+#                 for user in users_list:
+#                     chat_id = user.external_id
+#                     product_url = product.product_url
+#                     current_price = product.current_price
+#                     operator_price = product.operator_price
+#                     context.bot.send_message(chat_id, product_url)
+#                     message = f'{product.product_name} по цене {str(product.operator_price)} ' \
+#                               f'можно {product.operator_message}'
+#                     context.bot.send_message(chat_id, f'На этот товар оператор нашел ниже цену, '
+#                                                       f'вместо {current_price} цена составляет {operator_price}!\n'
+#                                                       f'{message}')
 
                     # keyboard = [
                     #     [
