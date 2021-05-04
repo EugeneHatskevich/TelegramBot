@@ -39,6 +39,8 @@ class Command(BaseCommand):
         helper_handler = CommandHandler('help', command_handlers.helper)
         """Команда для остановки мониторинга"""
         stop_handler = CommandHandler('stop', command_handlers.stop_command)
+        "Реакция бота на вопрос 'где купить?'"
+        buy_handler = MessageHandler(Filters.text, message_handlers.buy_function)
 
         conv_handler = ConversationHandler(
             entry_points=[CommandHandler('start', command_handlers.start)],
@@ -75,6 +77,7 @@ class Command(BaseCommand):
         updater.dispatcher.add_handler(general_job_handler)
         updater.dispatcher.add_handler(helper_handler)
         updater.dispatcher.add_handler(stop_handler)
+        updater.dispatcher.add_handler(buy_handler)
 
         updater.start_polling()
         updater.idle()

@@ -132,3 +132,20 @@ def warning_message(update: Update, context: CallbackContext):
         text='Выберите "Да" или "Нет"!',
     )
     return bot.SECOND
+
+
+def buy_function(update: Update, context: CallbackContext):
+    message = update.message.text.lower()
+    if message in ['где купить?', 'где купить', 'как купить', 'как купить?', 'купить', 'приобрести']:
+        profile = Profile.objects.get(external_id=update.message.chat_id)
+        monitoring_list = ActiveMonitoring.objects.filter(profile=profile)
+        for elem in monitoring_list:
+            if elem.text.operator_price:
+                product_name = elem.text.product_name
+                text=f'{product_name} можно купить у нашего партнера: в интернет-магазине 21vek по ' \
+                     f'промокоду price_cheker_bot.'
+            else:
+                product_url = elem.text.product_url
+                text=f'Данный товар с минимальной ценой представлен в каталоге онлайнер и ' \
+                     f'{product_url}.'
+            update.message.reply_text(text=text)
