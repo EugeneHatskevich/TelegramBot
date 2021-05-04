@@ -44,17 +44,17 @@ class Command(BaseCommand):
             entry_points=[CommandHandler('start', command_handlers.start)],
             states={
                 FIRST: [
-                    CommandHandler('some', command_handlers.done),
+                    CommandHandler('reset', command_handlers.reset),
                     CommandHandler('help', command_handlers.helper_first),
                     MessageHandler(Filters.text, message_handlers.find_onliner_price),
                 ],
                 SECOND: [
-                    CommandHandler('some', command_handlers.done),
+                    CommandHandler('reset', command_handlers.reset),
                     CallbackQueryHandler(callback_handlers.answer_about_monitoring),
                     MessageHandler(Filters.text, message_handlers.warning_message),
                 ],
             },
-            fallbacks=[CommandHandler('some', command_handlers.done)]
+            fallbacks=[CommandHandler('reset', command_handlers.reset)]
         )
 
         # conv_handler_end = ConversationHandler(
@@ -62,11 +62,11 @@ class Command(BaseCommand):
         #     states={
         #         FORTH: [
         #             CommandHandler('help', command_handlers.helper_forth),
-        #             CommandHandler('some', command_handlers.done),
+        #             CommandHandler('some', command_handlers.reset),
         #             MessageHandler(Filters.text, message_handlers.user_price),
         #         ],
         #     },
-        #     fallbacks=[CommandHandler('some', command_handlers.done)]
+        #     fallbacks=[CommandHandler('some', command_handlers.reset)]
         # )
 
         updater.dispatcher.add_handler(conv_handler)

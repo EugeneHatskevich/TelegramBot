@@ -1,6 +1,6 @@
 from telegram import Update
 from telegram.ext import CallbackContext, ConversationHandler
-from ugc.models import PassiveMonitoring, ActiveMonitoring
+from ugc.models import PassiveMonitoring, ActiveMonitoring, Message
 from ...commands import bot
 import datetime
 from pytz import timezone
@@ -9,9 +9,13 @@ from ugc.management.commands.admin_commands.update_price import update_price
 from django.conf import settings
 from ugc.management.commands.admin_commands.passive_notification import passive_notification
 from ugc.management.commands.admin_commands.daily_notification import daily_notification
+from ..delete_objects import delete_object
 
 
 def start(update: Update, context: CallbackContext):
+    print(update)
+    print('------------')
+    print(context)
     """Обработчик команды '/start', приветствует пользователя и просит прислать ссылку на товар"""
     update.message.reply_text(
         text='Привет! Я бот Гоша и я умею отслеживать изменение цены на выбранный тобой товар в каталоге онлайнера. '
@@ -42,7 +46,7 @@ def change_percent(update: Update, context: CallbackContext):
         )
 
 
-def done(update: Update, context: CallbackContext):
+def reset(update: Update, context: CallbackContext):
     update.message.reply_text(
         'Начни с команды "/start"',
     )
@@ -129,10 +133,9 @@ def helper_forth(update: Update, context: CallbackContext):
 
 
 def stop_command(update: Update, context: CallbackContext):
-    active_monitoring_list = ActiveMonitoring.objects.all()
-    for i in active_monitoring_list:
-        if i.profile.external_id == update.message.chat_id:
-            i.delete()
+    chat_id = update.message.chat_id
+    delete_object(ActiveMonitoring.objects.all(), chat_id)
+    delete_object(Message.objects.all(), chat_id)
     update.message.reply_text(
         text='Мониторинг отключен'
     )

@@ -1,7 +1,7 @@
 from django.contrib import admin
 from .models import Profile
 from .forms import ProfileForm
-from .models import Message
+# from .models import Message
 from .models import Product
 from .models import ActiveMonitoring, PassiveMonitoring
 from import_export.admin import ImportExportModelAdmin
@@ -11,11 +11,11 @@ from import_export.admin import ImportExportModelAdmin
 class ProfileAdmin(admin.ModelAdmin):
     list_display = ('id', 'external_id', 'name')
     form = ProfileForm
-
-
-@admin.register(Message)
-class MessageAdmin(admin.ModelAdmin):
-    list_display = ('id', 'profile', 'product', 'created_at')
+#
+#
+# @admin.register(Message)
+# class MessageAdmin(admin.ModelAdmin):
+#     list_display = ('id', 'profile', 'product', 'created_at')
 
 
 @admin.register(Product)
@@ -48,4 +48,3 @@ class PassiveMonitoringAdmin(admin.ModelAdmin):
 # class OperatorMessageWaitingAdmin(admin.ModelAdmin):
 #     list_display = ('id', 'monitoring', 'operator_price', 'operator_url')
 #     autocomplete_fields = ('monitoring',)
-

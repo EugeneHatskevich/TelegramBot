@@ -28,9 +28,9 @@ if os.path.exists(dotenv_path):
 SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DEBUG_PROD')
+DEBUG = os.environ.get('DEBUG_DEV')
 
-ALLOWED_HOSTS = os.environ.get('ALLOWED_HOST_PROD').split(',')
+ALLOWED_HOSTS = os.environ.get('ALLOWED_HOST_DEV').split(',')
 
 
 # Application definition
@@ -129,7 +129,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 
 
 # Токен бота
-TOKEN = os.environ.get('BOT_TOKEN_PROD')
+TOKEN = os.environ.get('BOT_TOKEN_DEV')
 # ID оператора
 OPERATOR_ID = int(os.environ.get('OPERATOR_ID'))
 # Установка времени для обновления базы данных цен на товары
