@@ -33,7 +33,7 @@ def daily_notification(context):
                                                       f'{product_id.current_price} рублей. Надо срочно брать, пока не '
                                                       f'подорожало. \n {cashback_message}')
             else:
-                message = f'Мы можем предложить {i.text.product_name} за {i.text.operator_price} в ' \
-                         f'интернет-магазине 21vek по промокоду price_cheker_bot, в каталоге онлайнер ' \
-                         f'он представлен по минимальной цене {i.text.current_price}'
+                message = f'Мы можем предложить {i.text.product_name} за {i.text.operator_price} ' \
+                          f'{i.text.operator_message}, в каталоге онлайнер ' \
+                          f'он представлен по минимальной цене {i.text.current_price}'
                 context.bot.send_message(chat_id, text=message)
