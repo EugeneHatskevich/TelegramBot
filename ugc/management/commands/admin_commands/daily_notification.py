@@ -8,10 +8,10 @@ def daily_notification(context):
     for i in active_monitoring_list:
         product_id = i.text
         chat_id = i.profile.external_id
-        actually = str(i.time_published).split('-')[2].split()[0]
-        now = str(datetime.datetime.today()).split('-')[2].split()[0]
-        result_time = int(now) - int(actually)
-        if result_time in [1, -27, -28, -29, -30]:
+        actually = int((i.time_published + datetime.timedelta(hours=3)).strftime('%d'))
+        now = int(datetime.datetime.today().strftime('%d'))
+        result_time = now - actually
+        if result_time != 0:
             if float(i.text.operator_price) == 0.0:
                 context.bot.send_message(chat_id, i.text.product_url)
                 cashback_message = ''
