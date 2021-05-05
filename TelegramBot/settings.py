@@ -135,7 +135,7 @@ OPERATOR_ID = int(os.environ.get('OPERATOR_ID'))
 # Установка времени для обновления базы данных цен на товары
 UPDATE_TIME = list(map(int, os.environ.get('UPDATE_TIME').split(',')))
 # Установка времени для отправки сообщений оператора по найденным им ценам
-MONITORING_TIME = list(map(int, os.environ.get('MONITORING_TIME').split(',')))
+# MONITORING_TIME = list(map(int, os.environ.get('MONITORING_TIME').split(',')))
 # Установка времени для отправки сообщений оператора по найденным желаемым ценам пользователей
 # MONITORING_WAITING_TIME = [20, 15]
 # Установка времени для ежедневного активного мониторинга
